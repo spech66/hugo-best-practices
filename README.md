@@ -2,6 +2,8 @@
 
 Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static site generator.
 
+If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)
+
 ## Organize Content
 
 I prefer to keep all images next to the Markdown files.
@@ -9,15 +11,15 @@ This allows me to keep the images in the highest poossible resolution and use th
 
 ```sh
 ├── mysite/
-    └── content/
+    ├── content/
     │   └── posts/
     │       ├── 0001-firstpost/
     │       │   ├── index.md
     │       │   └── me.jpg
-    │       └── 0002-secondpost/
+    │       ├── 0002-secondpost/
     │       │   ├── index.md
     │           └── fun.jpg
-    └── about/
+    ├── about/
     │   └── index.md
 ```
 
@@ -25,7 +27,9 @@ There is a Discussion on this in the [Forum](https://discourse.gohugo.io/t/discu
 
 ## Copy the theme folder content
 
-x
+In 99.999% of the time you want to make changes to existing themes. To keep your version independent of the latest development copy all theme files (except from screenshots and examples) to your main directory.
+There is no need to provide the theme setting in the config anymore. However you might want to add the theme as a git submodule to your themes directory.
+Having the submodule available allows you to diff your files to the lastest master. This gives you the possibility to copy relevant features and fixes to your own theme.
 
 ## CSS and JavaScript
 
@@ -34,11 +38,11 @@ The latest version of Hugo will do all the stuff like bundling and minifiy for y
 
 There are three critical methods to use as the bare minimum `minify`, `fingerprint` and `slice`. SCSS might make use of `toCSS` and `postCSS`.
 
-With `minify` you will get a minified version of your files.
+With `minify` you will get a minified version of your files. ([Hugo Documentation](https://gohugo.io/hugo-pipes/minification/))
 
-The `fingerprint` adds a unique string to the name so that the browser won't cache your files on modification.
+The `fingerprint` adds a unique string to the name so that the browser won't cache your files on modification. ([Hugo Documentation](https://gohugo.io/hugo-pipes/fingerprint/))
 
-Finally `slice` allows you to concat multiple files to a new one. This works best with `minify`.
+Finally `slice` allows you to concat multiple files to a new one. This works best with `minify`. ([Hugo Documentation](https://gohugo.io/hugo-pipes/bundling/))
 
 ### CSS
 
@@ -49,7 +53,7 @@ Putting the above methods in place the minified `main.css` will be created as de
 <link rel="stylesheet" href="{{ $stylemain.Permalink }}" integrity="{{ $stylemain.Data.Integrity }}">
 ```
 
-For processing SCSS Hugo provides two functions.
+For processing SCSS Hugo provides two functions. ([Hugo Documentation](https://gohugo.io/hugo-pipes/postcss/))
 
 ```html
 {{ $stylemain := resources.Get "scss/main.scss" | toCSS | postCSS (dict "use" "autoprefixer") | minify | fingerprint }}
