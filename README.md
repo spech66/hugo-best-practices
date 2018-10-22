@@ -25,6 +25,10 @@ This allows me to keep the images in the highest poossible resolution and use th
 
 There is a Discussion on this in the [Forum](https://discourse.gohugo.io/t/discussion-content-organization-best-practice/6360/2).
 
+## Git repository
+
+Keep your site in a version control system like Git. This provides backup, history and multi user editing out of the box.
+
 ## Copy the theme folder content
 
 In 99.999% of the time you want to make changes to existing themes. To keep your version independent of the latest development copy all theme files (except from screenshots and examples) to your main directory.
@@ -77,7 +81,7 @@ Usually a theme will contain multiple JS files which might require a specific or
 
 Image files should never be larger than necessary.
 
-Hugo allows you to create resources from `.Param` information ([Hugo Documentation](https://gohugo.io/hugo-pipes/resource-from-string/)).
+Hugo allows you to create resources from `.Params` information ([Hugo Documentation](https://gohugo.io/hugo-pipes/resource-from-string/)).
 The resources can be processed with the image processing functions from Hugo afterwards ([Hugo Documentation](https://gohugo.io/content-management/image-processing/)).
 This allows you to keep the original images next to the Markdown files (as mentioned before) and let Hugo generate thumbnails and smaller versions.
 
@@ -97,6 +101,10 @@ This example resizes the image mentioned in the `featured_image` parameter of th
     {{ end }}
 {{ end }}
 ```
+
+## Caching and .htaccess
+
+x
 
 ## Front-End Checklist
 
