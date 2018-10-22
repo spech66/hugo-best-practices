@@ -21,6 +21,8 @@ This allows me to keep the images in the highest poossible resolution and use th
     │   └── index.md
 ```
 
+There is a Discussion on this in the [Forum](https://discourse.gohugo.io/t/discussion-content-organization-best-practice/6360/2).
+
 ## Copy the theme folder content
 
 x
@@ -44,6 +46,13 @@ Putting the above methods in place the minified `main.css` will be created as de
 
 ```html
 {{ $stylemain := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $stylemain.Permalink }}" integrity="{{ $stylemain.Data.Integrity }}">
+```
+
+For processing SCSS Hugo provides two functions.
+
+```html
+{{ $stylemain := resources.Get "scss/main.scss" | toCSS | postCSS (dict "use" "autoprefixer") | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $stylemain.Permalink }}" integrity="{{ $stylemain.Data.Integrity }}">
 ```
 
