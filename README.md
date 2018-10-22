@@ -75,7 +75,26 @@ Usually a theme will contain multiple JS files which might require a specific or
 
 ## Images
 
-x
+Hugo allows you to create resources from `.Param` information ([Hugo Documentation](https://gohugo.io/hugo-pipes/resource-from-string/)).
+The resources can be processed with the image processing functions from Hugo afterwards ([Hugo Documentation](https://gohugo.io/content-management/image-processing/)).
+This allows you to keep the original images next to the Markdown files (as mentioned before) and let Hugo generate thumbnails and smaller versions.
+
+```html
+featured_image: my-blog-header-1.jpg
+```
+
+This example resizes the image mentioned in the `featured_image` parameter of the blog page to a version with 800 pixel width.
+
+```html
+{{ if .Params.featured_image }}
+    {{ $siteurl := (.RelPermalink) }}
+    {{ $sitetitle := (.Title) }}
+    {{ with .Resources.GetMatch (.Params.featured_image) }}
+        {{ $thumb := .Resize "800x" }}
+        <img src="{{ $thumb.Permalink }}" alt="{{ $sitetitle }}">
+    {{ end }}
+{{ end }}
+```
 
 ## Front-End Checklist
 
