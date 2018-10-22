@@ -2,6 +2,25 @@
 
 Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static site generator.
 
+## Organize Content
+
+I prefer to keep all images next to the Markdown files.
+This allows me to keep the images in the highest poossible resolution and use the latest hugo version to resize them to the perfect size for the current theme.
+
+```sh
+├── mysite/
+    └── content/
+    │   └── posts/
+    │       ├── 0001-firstpost/
+    │       │   ├── index.md
+    │       │   └── me.jpg
+    │       └── 0002-secondpost/
+    │       │   ├── index.md
+    │           └── fun.jpg
+    └── about/
+    │   └── index.md
+```
+
 ## Copy the theme folder content
 
 x
