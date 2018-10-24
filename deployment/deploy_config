@@ -1,0 +1,2 @@
+export HUGO_SSH_DESTINATION=/is/htdocs/wp1066680_P3U9D5OXQE/www/spechde/
+export HUGO_SSH_SERVER='wp1066680@ssh.server-he.de'

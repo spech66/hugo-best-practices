@@ -25,15 +25,21 @@ This allows me to keep the images in the highest poossible resolution and use th
 
 There is a Discussion on this in the [Forum](https://discourse.gohugo.io/t/discussion-content-organization-best-practice/6360/2).
 
-## Git repository
+## Git repository and CI Tools
 
 Keep your site in a version control system like Git. This provides backup, history and multi user editing out of the box.
+
+Use Continuous Integration/Deployment to publish your website after git push. Simple solutions like [webhook](https://github.com/adnanh/webhook/) might do the job. For complex scenarios you might want to use something like [Jenkins](https://jenkins.io/). For most cases Jenkins will be overkill.
+
+You can sync files using `rsync` after a successfull build. Have a look at the provided `deploy` scripts in this repository.
 
 ## Copy the theme folder content
 
 In 99.999% of the time you want to make changes to existing themes. To keep your version independent of the latest development copy all theme files (except from screenshots and examples) to your main directory.
 There is no need to provide the theme setting in the config anymore. However you might want to add the theme as a git submodule to your themes directory.
 Having the submodule available allows you to diff your files to the lastest master. This gives you the possibility to copy relevant features and fixes to your own theme.
+
+I hope that newer themes will just work out of the box with performance and SEO kept in mind.
 
 ## CSS and JavaScript
 
