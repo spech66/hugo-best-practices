@@ -52,7 +52,7 @@ This might be the archetype for posts. I prefect to collect all categories and t
 title: "{{ replace .Name "-" " " | title }}"
 author: Sebastian
 type: post
-date: {{ .Date }}
+date:  {{ now.Format "2006-01-02" }}
 featured_image: myimage.jpg
 draft: true
 categories:
@@ -190,6 +190,50 @@ See the example `.htaccess` in the `static` folder. It covers the following poin
 * Wordpress migration rules
 
 Make sure you understand every rule before applying it! The Content-Security-Policy might break your page if you rely on external sources.
+
+## Add a Schema.org partial
+
+Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-website-seo/).
+
+```html
+# layouts/partials/header.html
+...
+{{ partial "seo_schema" . }}
+<title>
+...
+```
+
+```js
+// layouts/partials/seo_schema.html
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "{{ .Site.BaseURL }}"
+    },
+    "articleSection" : "{{ .Section }}",
+    "name" : "{{ .Title }}",
+    "headline" : "{{ .Title }}",
+    "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
+    "inLanguage" : "{{ .Lang }}",
+    "author" : "{{ range .Site.Author }}{{ . }}{{ end }}",
+    "creator" : "{{ range .Site.Author }}{{ . }}{{ end }}",
+    "publisher": "{{ range .Site.Author }}{{ . }}{{ end }}",
+    "accountablePerson" : "{{ range .Site.Author }}{{ . }}{{ end }}",
+    "copyrightHolder" : "{{ range .Site.Author }}{{ . }}{{ end }}",
+    "copyrightYear" : "{{ .Date.Format "2006" }}",
+    "datePublished": "{{ .Date | safeHTML }}",
+    "dateModified" : "{{ .Date | safeHTML }}",
+    "url" : "{{ .Permalink }}",
+    "wordCount" : "{{ .WordCount }}",
+    "keywords" : [ {{ if isset .Params "tags" }}{{ range .Params.tags }}"{{ . }}",{{ end }}{{ end }}"Blog" ]
+}
+</script>
+```
+
+I modified the example with `{{ .Date | safeHTML }}` otherwise Hugo replaces the + for positive timezones (like GTM, MEZ, ...) with a HTML escaped sequence which makes the javascript illegal for HTML check tools.
 
 ## Front-End Checklist
 
