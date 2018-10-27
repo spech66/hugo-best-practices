@@ -1,0 +1,139 @@
+RewriteEngine On
+
+# If you migrate from wordpress this will keep your tags and categories working
+# RewriteRule ^tag/(.*)$ https://www.REPLACEME.xyz/tags/$1/ [R=301,L]
+# RewriteRule ^category/(.*)$ https://www.REPLACEME.xyz/categories/$1/ [R=301,L]
+
+# Migrate old content
+# RewriteRule ^my/old/(.*)$ https://www.REPLACEME.xyz/new/page/ [R=301,L]
+# RewriteRule ^2018/10/old-blog-post/(.*)$ https://www.REPLACEME.xyz/2018/10/new-blog-post/ [R=301,L]
+
+# SSL and www
+RewriteCond %{HTTPS} !on [OR]
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule (.*) https://www.REPLACEME.xyz%{REQUEST_URI} [L,R=301]
+
+# Create 404 error page in /layouts
+ErrorDocument 404 /404.html
+
+# Redirect Wordpress RSS feed URL to Hugo RSS feed URL
+RedirectMatch 301 (?i)^/feed/?(index.xml)?$ https://www.REPLACEME.xyz/index.xml
+
+# HSTS
+Header set Strict-Transport-Security "max-age=31536000"
+# Block site from being framed with X-Frame-Options and CSP
+#Header set Content-Security-Policy "frame-ancestors 'self';"
+Header append X-Frame-Options: DENY
+# Prevent browsers from incorrectly detecting non-scripts as scripts
+Header append X-Content-Type-Options: nosniff
+# Content Security Policy
+# Don't implement the above policy yet; instead just report violations that would have occured
+#Header set Content-Security-Policy-Report-Only: "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * https: data:; frame-ancestors 'self';"
+Header set Content-Security-Policy: "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * data:; frame-ancestors 'self';"
+
+# Active GZIP compression
+<IfModule mod_deflate.c>
+	SetOutputFilter DEFLATE
+</IfModule>
+
+# Activate keep alive header
+<IfModule mod_headers.c>
+	Header append Cache-Control "public"
+	Header append Vary Accept-Encoding
+	Header set Connection keep-alive
+	Header unset ETag
+	FileETag None
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+
+	ExpiresActive on
+	ExpiresDefault                                    "access plus 1 month"
+	
+	# DATA
+	ExpiresByType text/xml                            "access plus 0 seconds"
+	ExpiresByType text/html                           "access plus 0 seconds"
+	ExpiresByType text/plain                          "access plus 0 seconds"
+	ExpiresByType application/xml                     "access plus 0 seconds"
+	ExpiresByType application/json                    "access plus 0 seconds"
+	ExpiresByType application/rss+xml                 "access plus 1 hour"
+	ExpiresByType application/atom+xml                "access plus 1 hour"
+	ExpiresByType text/x-component                    "access plus 1 hour"
+	
+	# MANIFEST
+	ExpiresByType application/x-web-app-manifest+json "access plus 0 seconds"
+	ExpiresByType text/cache-manifest                 "access plus 0 seconds"
+	
+	# SCRIPTS
+	ExpiresByType text/css                            "access plus 1 month" 
+	ExpiresByType text/javascript                     "access plus 1 month" 
+	ExpiresByType application/javascript              "access plus 1 month" 
+	ExpiresByType application/x-javascript            "access plus 1 month" 
+	
+	# IMAGES
+	ExpiresByType image/gif                           "access plus 1 month"
+	ExpiresByType image/png                           "access plus 1 month"
+	ExpiresByType image/jpe                           "access plus 1 month"
+	ExpiresByType image/jpg                           "access plus 1 month"
+	ExpiresByType image/jpeg                          "access plus 1 month"
+	ExpiresByType image/jp2                           "access plus 1 month"
+	ExpiresByType image/pipeg                         "access plus 1 month"
+	ExpiresByType image/bmp                           "access plus 1 month"
+	ExpiresByType image/tiff                          "access plus 1 month"
+	ExpiresByType image/svg+xml                       "access plus 1 month"
+	ExpiresByType image/vnd.microsoft.icon            "access plus 1 month"
+	
+	# ICONS
+	ExpiresByType image/ico                           "access plus 1 month"
+	ExpiresByType image/icon                          "access plus 1 month"
+	ExpiresByType text/ico                            "access plus 1 month"
+	ExpiresByType image/x-ico                         "access plus 1 month"
+	ExpiresByType image/x-icon                        "access plus 1 month"
+	ExpiresByType application/ico                     "access plus 1 month"
+	
+	# AUDIO
+	ExpiresByType audio/ogg                           "access plus 1 month"
+	ExpiresByType audio/basic                         "access plus 1 month"
+	ExpiresByType audio/mid                           "access plus 1 month"
+	ExpiresByType audio/midi                          "access plus 1 month"
+	ExpiresByType audio/mpeg                          "access plus 1 month"
+	ExpiresByType audio/x-aiff                        "access plus 1 month"
+	ExpiresByType audio/x-mpegurl                     "access plus 1 month"
+	ExpiresByType audio/x-pn-realaudio                "access plus 1 month"
+	ExpiresByType audio/x-wav                         "access plus 1 month"
+	
+	# VIDEO
+	ExpiresByType video/ogg                           "access plus 1 month"
+	ExpiresByType video/mp4                           "access plus 1 month"
+	ExpiresByType video/webm                          "access plus 1 month"
+	ExpiresByType video/x-msvideo                     "access plus 1 month"
+	ExpiresByType video/mpeg                          "access plus 1 month"
+	ExpiresByType video/quicktime                     "access plus 1 month"
+	ExpiresByType video/x-la-asf                      "access plus 1 month"
+	ExpiresByType video/x-ms-asf                      "access plus 1 month"
+	ExpiresByType x-world/x-vrml                      "access plus 1 month"
+	
+	# FONTS
+	ExpiresByType font/truetype                       "access plus 1 month"
+	ExpiresByType font/opentype                       "access plus 1 month"
+	ExpiresByType application/x-font-ttf              "access plus 1 month"
+	ExpiresByType application/x-font-woff             "access plus 1 month"
+	ExpiresByType application/font-woff               "access plus 1 month"
+	ExpiresByType application/vnd.ms-fontobject       "access plus 1 month"
+	
+	# FLASH
+	ExpiresByType application/x-shockwave-flash       "access plus 1 month"
+	ExpiresByType video/x-flv                         "access plus 1 month"
+	
+	# OTHERS
+	ExpiresByType application/pdf                     "access plus 1 month"
+	ExpiresByType image/vnd.wap.wbmp                  "access plus 1 month"
+	ExpiresByType application/vnd.wap.wbxml           "access plus 1 month"
+	ExpiresByType application/smil                    "access plus 1 month"
+	
+	<IfModule mod_headers.c>
+		Header append Cache-Control "public"
+	</IfModule>
+	
+</IfModule>

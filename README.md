@@ -4,7 +4,7 @@ Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static s
 
 If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)
 
-## Organize Content
+## Content organization
 
 I prefer to keep all images next to the Markdown files.
 This allows me to keep the images in the highest poossible resolution and use the latest hugo version to resize them to the perfect size for the current theme.
@@ -31,7 +31,76 @@ Keep your site in a version control system like Git. This provides backup, histo
 
 Use Continuous Integration/Deployment to publish your website after git push. Simple solutions like [webhook](https://github.com/adnanh/webhook/) might do the job. For complex scenarios you might want to use something like [Jenkins](https://jenkins.io/). For most cases Jenkins will be overkill.
 
-You can sync files using `rsync` after a successfull build. Have a look at the provided `deploy` scripts in this repository.
+You can sync files using `rsync` after a successfull build. Have a look at the provided `deployment` scripts in this repository.
+
+## Content types and archetypes
+
+Define your required types. A blog usually goes with pages and posts. Pages won't have things like the author or creation dates display.
+They are usually reached under their name directly. Posts will be postet regualary and might have a structure like `/year/month/name`.
+The archetypes should reflect the data that is needed for the content. Posts should have tags and categories applied.
+
+```yaml
+[permalinks]
+    posts = "/:year/:month/:slug/"
+    page = "/:slug/"
+```
+
+This might be the archetype for posts. I prefect to collect all categories and tags in the archetype so I can remove all unused ones for the new blog post.
+
+```yaml
+---
+title: "{{ replace .Name "-" " " | title }}"
+author: Sebastian
+type: post
+date: {{ .Date }}
+featured_image: myimage.jpg
+draft: true
+categories:
+  - A
+  - B
+  - C
+tags:
+  - Hugo
+  - Game Development
+  - Internet of Things (IoT)
+  - Linux
+  - ...
+description: xxx
+---
+
+CONTENT
+
+&nbsp;
+
+Source: xyz
+```
+
+## Configure the site
+
+Configure your new site with all relevant [options](https://gohugo.io/getting-started/configuration/). These are helpful values to start with.
+
+```yaml
+# Settings
+baseURL = "https://www.spech.de/"
+languageCode = "de-DE" # or en-US
+title = "My hugo page"
+description = "Nice page"
+# theme = "hugo-future-imperfect" # <- you won't need this as we copy the theme data!
+googleAnalytics = "UA-111111111111-1"
+canonifyURLs = true
+copyright = "Sebastian Pech"
+enableRobotsTXT = true
+
+[sitemap]
+    changefreq = "weekly"
+    priority = 0.5
+
+[permalinks]
+    posts = "/:year/:month/:slug/"
+    page = "/:slug/"
+```
+
+Make sure to send your `sitemap.xml` file to [Google Search Console](https://www.google.com/webmasters/tools/home), [Bing Webmaster Tools](https://www.bing.com/toolbox/webmaster), ...
 
 ## Copy the theme folder content
 
@@ -110,8 +179,18 @@ This example resizes the image mentioned in the `featured_image` parameter of th
 
 ## Caching and .htaccess
 
-x
+See the example `.htaccess` in the `static` folder. It covers the following points.
+
+* Redirects for old content
+* Compression
+* Caching
+* SSL
+* HSTS and Content Security Policies
+* Errror documents
+* Wordpress migration rules
+
+Make sure you understand every rule before applying it! The Content-Security-Policy might break your page if you rely on external sources.
 
 ## Front-End Checklist
 
-Walk trough every point in the [Front-End Checklist](https://github.com/thedaviddias/Front-End-Checklist)
+Walk trough every point in the [Front-End Checklist](https://github.com/thedaviddias/Front-End-Checklist) and the [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist).
