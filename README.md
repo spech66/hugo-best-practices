@@ -235,6 +235,13 @@ Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-websit
 
 I modified the example with `{{ .Date | safeHTML }}` otherwise Hugo replaces the + for positive timezones (like GTM, MEZ, ...) with a HTML escaped sequence which makes the javascript illegal for HTML check tools.
 
+Setting .Site.Author is a bit tricky. Use this snippet.
+
+```toml
+[Author]  
+  name = "Sebastian Pech"
+```
+
 ## Front-End Checklist
 
 Walk trough every point in the [Front-End Checklist](https://github.com/thedaviddias/Front-End-Checklist) and the [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist).
