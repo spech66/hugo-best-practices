@@ -193,6 +193,8 @@ Make sure you understand every rule before applying it! The Content-Security-Pol
 
 ## Add a Schema.org partial
 
+**UPDATE:** Even better use Hugo [internal templates](https://gohugo.io/templates/internal/) for this.
+
 Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-website-seo/).
 
 ```html
@@ -216,7 +218,8 @@ Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-websit
     "articleSection" : "{{ .Section }}",
     "name" : "{{ .Title }}",
     "headline" : "{{ .Title }}",
-    "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
+    // "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
+    "description" : {{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}
     "inLanguage" : "{{ .Lang }}",
     "author" : "{{ range .Site.Author }}{{ . }}{{ end }}",
     "creator" : "{{ range .Site.Author }}{{ . }}{{ end }}",
