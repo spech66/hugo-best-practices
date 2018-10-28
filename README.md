@@ -219,7 +219,7 @@ Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-websit
     "name" : "{{ .Title }}",
     "headline" : "{{ .Title }}",
     // "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
-    "description" : {{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}
+    "description" : "{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}"
     "inLanguage" : "{{ .Lang }}",
     "author" : "{{ range .Site.Author }}{{ . }}{{ end }}",
     "creator" : "{{ range .Site.Author }}{{ . }}{{ end }}",
