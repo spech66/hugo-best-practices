@@ -36,13 +36,24 @@ Header set Content-Security-Policy: "default-src https: 'unsafe-eval' 'unsafe-in
 	SetOutputFilter DEFLATE
 </IfModule>
 
-# Activate keep alive header
 <IfModule mod_headers.c>
 	Header append Cache-Control "public"
 	Header append Vary Accept-Encoding
 	Header set Connection keep-alive
 	Header unset ETag
 	FileETag None
+
+    # Because `mod_headers` cannot match based on the content-type,
+    # the following workaround needs to be used.
+    <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+        Header unset Content-Security-Policy
+        Header unset X-Content-Security-Policy
+        Header unset X-Frame-Options
+        Header unset X-UA-Compatible
+        Header unset X-WebKit-CSP
+        Header unset X-XSS-Protection
+	Header unset X-Content-Type-Options
+    </FilesMatch>
 </IfModule>
 
 # Browser Caching
@@ -72,65 +83,65 @@ Header set Content-Security-Policy: "default-src https: 'unsafe-eval' 'unsafe-in
 	ExpiresByType application/x-javascript            "access plus 1 month" 
 	
 	# IMAGES
-	ExpiresByType image/gif                           "access plus 1 month"
-	ExpiresByType image/png                           "access plus 1 month"
-	ExpiresByType image/jpe                           "access plus 1 month"
-	ExpiresByType image/jpg                           "access plus 1 month"
-	ExpiresByType image/jpeg                          "access plus 1 month"
-	ExpiresByType image/jp2                           "access plus 1 month"
-	ExpiresByType image/pipeg                         "access plus 1 month"
-	ExpiresByType image/bmp                           "access plus 1 month"
-	ExpiresByType image/tiff                          "access plus 1 month"
-	ExpiresByType image/svg+xml                       "access plus 1 month"
-	ExpiresByType image/vnd.microsoft.icon            "access plus 1 month"
+	ExpiresByType image/gif                           "access plus 1 year"
+	ExpiresByType image/png                           "access plus 1 year"
+	ExpiresByType image/jpe                           "access plus 1 year"
+	ExpiresByType image/jpg                           "access plus 1 year"
+	ExpiresByType image/jpeg                          "access plus 1 year"
+	ExpiresByType image/jp2                           "access plus 1 year"
+	ExpiresByType image/pipeg                         "access plus 1 year"
+	ExpiresByType image/bmp                           "access plus 1 year"
+	ExpiresByType image/tiff                          "access plus 1 year"
+	ExpiresByType image/svg+xml                       "access plus 1 year"
+	ExpiresByType image/vnd.microsoft.icon            "access plus 1 year"
 	
 	# ICONS
-	ExpiresByType image/ico                           "access plus 1 month"
-	ExpiresByType image/icon                          "access plus 1 month"
-	ExpiresByType text/ico                            "access plus 1 month"
-	ExpiresByType image/x-ico                         "access plus 1 month"
-	ExpiresByType image/x-icon                        "access plus 1 month"
-	ExpiresByType application/ico                     "access plus 1 month"
+	ExpiresByType image/ico                           "access plus 1 year"
+	ExpiresByType image/icon                          "access plus 1 year"
+	ExpiresByType text/ico                            "access plus 1 year"
+	ExpiresByType image/x-ico                         "access plus 1 year"
+	ExpiresByType image/x-icon                        "access plus 1 year"
+	ExpiresByType application/ico                     "access plus 1 year"
 	
 	# AUDIO
-	ExpiresByType audio/ogg                           "access plus 1 month"
-	ExpiresByType audio/basic                         "access plus 1 month"
-	ExpiresByType audio/mid                           "access plus 1 month"
-	ExpiresByType audio/midi                          "access plus 1 month"
-	ExpiresByType audio/mpeg                          "access plus 1 month"
-	ExpiresByType audio/x-aiff                        "access plus 1 month"
-	ExpiresByType audio/x-mpegurl                     "access plus 1 month"
-	ExpiresByType audio/x-pn-realaudio                "access plus 1 month"
-	ExpiresByType audio/x-wav                         "access plus 1 month"
+	ExpiresByType audio/ogg                           "access plus 1 year"
+	ExpiresByType audio/basic                         "access plus 1 year"
+	ExpiresByType audio/mid                           "access plus 1 year"
+	ExpiresByType audio/midi                          "access plus 1 year"
+	ExpiresByType audio/mpeg                          "access plus 1 year"
+	ExpiresByType audio/x-aiff                        "access plus 1 year"
+	ExpiresByType audio/x-mpegurl                     "access plus 1 year"
+	ExpiresByType audio/x-pn-realaudio                "access plus 1 year"
+	ExpiresByType audio/x-wav                         "access plus 1 year"
 	
 	# VIDEO
-	ExpiresByType video/ogg                           "access plus 1 month"
-	ExpiresByType video/mp4                           "access plus 1 month"
-	ExpiresByType video/webm                          "access plus 1 month"
-	ExpiresByType video/x-msvideo                     "access plus 1 month"
-	ExpiresByType video/mpeg                          "access plus 1 month"
-	ExpiresByType video/quicktime                     "access plus 1 month"
-	ExpiresByType video/x-la-asf                      "access plus 1 month"
-	ExpiresByType video/x-ms-asf                      "access plus 1 month"
-	ExpiresByType x-world/x-vrml                      "access plus 1 month"
+	ExpiresByType video/ogg                           "access plus 1 year"
+	ExpiresByType video/mp4                           "access plus 1 year"
+	ExpiresByType video/webm                          "access plus 1 year"
+	ExpiresByType video/x-msvideo                     "access plus 1 year"
+	ExpiresByType video/mpeg                          "access plus 1 year"
+	ExpiresByType video/quicktime                     "access plus 1 year"
+	ExpiresByType video/x-la-asf                      "access plus 1 year"
+	ExpiresByType video/x-ms-asf                      "access plus 1 year"
+	ExpiresByType x-world/x-vrml                      "access plus 1 year"
 	
 	# FONTS
-	ExpiresByType font/truetype                       "access plus 1 month"
-	ExpiresByType font/opentype                       "access plus 1 month"
-	ExpiresByType application/x-font-ttf              "access plus 1 month"
-	ExpiresByType application/x-font-woff             "access plus 1 month"
-	ExpiresByType application/font-woff               "access plus 1 month"
-	ExpiresByType application/vnd.ms-fontobject       "access plus 1 month"
+	ExpiresByType font/truetype                       "access plus 1 year"
+	ExpiresByType font/opentype                       "access plus 1 year"
+	ExpiresByType application/x-font-ttf              "access plus 1 year"
+	ExpiresByType application/x-font-woff             "access plus 1 year"
+	ExpiresByType application/font-woff               "access plus 1 year"
+	ExpiresByType application/vnd.ms-fontobject       "access plus 1 year"
 	
 	# FLASH
-	ExpiresByType application/x-shockwave-flash       "access plus 1 month"
-	ExpiresByType video/x-flv                         "access plus 1 month"
+	ExpiresByType application/x-shockwave-flash       "access plus 1 year"
+	ExpiresByType video/x-flv                         "access plus 1 year"
 	
 	# OTHERS
-	ExpiresByType application/pdf                     "access plus 1 month"
-	ExpiresByType image/vnd.wap.wbmp                  "access plus 1 month"
-	ExpiresByType application/vnd.wap.wbxml           "access plus 1 month"
-	ExpiresByType application/smil                    "access plus 1 month"
+	ExpiresByType application/pdf                     "access plus 1 year"
+	ExpiresByType image/vnd.wap.wbmp                  "access plus 1 year"
+	ExpiresByType application/vnd.wap.wbxml           "access plus 1 year"
+	ExpiresByType application/smil                    "access plus 1 year"
 	
 	<IfModule mod_headers.c>
 		Header append Cache-Control "public"
