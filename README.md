@@ -1,13 +1,12 @@
-# hugo-best-practices
+# Hugo - Best practices
 
 Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static site generator.
 
-If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)
+_If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)_
 
 ## Content organization
 
-I prefer to keep all images next to the Markdown files.
-This allows me to keep the images in the highest poossible resolution and use the latest hugo version to resize them to the perfect size for the current theme.
+Keep all images next to the index Markdown file. This allows to keep the images in the highest possible resolution and let hugo resize them to the perfect size for the current theme.
 
 ```sh
 ├── mysite/
@@ -35,8 +34,8 @@ You can sync files using `rsync` after a successfull build. Have a look at the p
 
 ## Content types and archetypes
 
-Define your required types. A blog usually goes with pages and posts. Pages won't have things like the author or creation dates display.
-They are usually reached under their name directly. Posts will be postet regualary and might have a structure like `/year/month/name`.
+Define your required types. A blog usually goes with pages and posts. Pages won't have fields like the author or creation dates displayed.
+Pages are usually reached under their name directly. Posts will be posted serveral times a month and might have a structure like `/year/month/name`.
 The archetypes should reflect the data that is needed for the content. Posts should have tags and categories applied.
 
 ```yaml
