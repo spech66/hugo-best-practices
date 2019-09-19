@@ -4,7 +4,7 @@ This folder contains a simple deployment script with basic error handling. The s
 
 ## Usage
 
-Modify the `deploy_config`.
+Copy to the root folder of your page and modify the `deploy_config`.
 
 Make sure the destination server is reachable by ssh using `authorized_keys`.
 
