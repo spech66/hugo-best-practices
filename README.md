@@ -4,6 +4,9 @@ Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static s
 
 _If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)_
 
+Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/bootstrap-bp-hugo-theme), [Materialize-BP](https://github.com/spech66/materialize-bp-hugo-theme),
+[Bootstrap-BP hugo startpage](https://github.com/spech66/bootstrap-bp-hugo-startpage).
+
 ## Content organization
 
 Keep all images next to the index Markdown file. This allows to keep the images in the highest possible resolution and let hugo resize them to the perfect size for the current theme.
