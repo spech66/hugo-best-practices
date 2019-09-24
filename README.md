@@ -7,6 +7,28 @@ _If there is any english native speaker reading this I would be glad to get some
 Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/bootstrap-bp-hugo-theme), [Materialize-BP](https://github.com/spech66/materialize-bp-hugo-theme),
 [Bootstrap-BP hugo startpage](https://github.com/spech66/bootstrap-bp-hugo-startpage).
 
+## Table of contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Content organization](#content-organization)
+- [Git repository and CI Tools](#git-repository-and-ci-tools)
+- [Content types and archetypes](#content-types-and-archetypes)
+- [Configure the site](#configure-the-site)
+- [Copy the theme folder content](#copy-the-theme-folder-content)
+- [CSS and JavaScript](#css-and-javascript)
+  - [CSS](#css)
+  - [Javascript](#javascript)
+- [Images](#images)
+- [Caching and .htaccess](#caching-and-htaccess)
+- [Add a Schema.org partial](#add-a-schemaorg-partial)
+- [Front-End Checklist](#front-end-checklist)
+- [Tools](#tools)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Content organization
 
 Keep all images next to the index Markdown file. This allows to keep the images in the highest possible resolution and let hugo resize them to the perfect size for the current theme.
