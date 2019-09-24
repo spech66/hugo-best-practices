@@ -250,3 +250,12 @@ Setting .Site.Author is a bit tricky. Use this snippet.
 ## Front-End Checklist
 
 Walk trough every point in the [Front-End Checklist](https://github.com/thedaviddias/Front-End-Checklist) and the [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist).
+
+## Tools
+
+There are some tools and websites that can validate your page and check the speed.
+
+* [webhint](https://webhint.io/scanner/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._
+* [Varvy SEO tool](https://varvy.com/) _See how well a page follows the Google guidelines._
+* [SEORCH](https://seorch.de/) German SEO testing tool.
+* [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
