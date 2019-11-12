@@ -281,3 +281,5 @@ There are some tools and websites that can validate your page and check the spee
 * [Varvy SEO tool](https://varvy.com/) _See how well a page follows the Google guidelines._
 * [SEORCH](https://seorch.de/) German SEO testing tool.
 * [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
+* [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) speed test.
+* [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance, speed and SEO checks in Chrome.
