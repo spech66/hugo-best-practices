@@ -17,7 +17,6 @@ Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/b
 - [Git repository and CI Tools](#git-repository-and-ci-tools)
 - [Content types and archetypes](#content-types-and-archetypes)
 - [Configure the site](#configure-the-site)
-- [Copy the theme folder content](#copy-the-theme-folder-content)
 - [CSS and JavaScript](#css-and-javascript)
   - [CSS](#css)
   - [Javascript](#javascript)
