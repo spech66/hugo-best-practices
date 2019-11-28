@@ -126,14 +126,6 @@ enableRobotsTXT = true
 
 Make sure to send your `sitemap.xml` file to [Google Search Console](https://www.google.com/webmasters/tools/home), [Bing Webmaster Tools](https://www.bing.com/toolbox/webmaster), ...
 
-## Copy the theme folder content
-
-In 99.999% of the time you want to make changes to existing themes. To keep your version independent of the latest development copy all theme files (except from screenshots and examples) to your main directory.
-There is no need to provide the theme setting in the config anymore. However you might want to add the theme as a git submodule to your themes directory.
-Having the submodule available allows you to diff your files to the lastest master. This gives you the possibility to copy relevant features and fixes to your own theme.
-
-I hope that newer themes will just work out of the box with performance and SEO kept in mind.
-
 ## CSS and JavaScript
 
 Old themes kept the css and js files in the static folder. Sometimes tools like Gulp, Grunt and Webpack were used for pre-processing.
@@ -218,6 +210,8 @@ Make sure you understand every rule before applying it! The Content-Security-Pol
 ## Add a Schema.org partial
 
 **UPDATE:** Even better use Hugo [internal templates](https://gohugo.io/templates/internal/) for this.
+
+**UPDATE (Hugo >= 0.60.0):** According to the patch notes Hugo processes the images in a new order. `The image logic in the 3 SEO internal templates twitter_cards.html, opengraph.html, and schema.html is consolidated: images page param first, then bundled image matching *feature*, *cover* or *thumbnail*, then finally images site param.`
 
 Add a Schema.org partial according to [](https://keithpblog.org/post/hugo-website-seo/).
 
