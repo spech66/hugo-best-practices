@@ -2,8 +2,6 @@
 
 Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static site generator.
 
-_If there is any english native speaker reading this I would be glad to get some corrections on the wording. ;-)_
-
 Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/bootstrap-bp-hugo-theme), [Materialize-BP](https://github.com/spech66/materialize-bp-hugo-theme),
 [Bootstrap-BP hugo startpage](https://github.com/spech66/bootstrap-bp-hugo-startpage).
 
@@ -12,19 +10,21 @@ Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/b
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [Content organization](#content-organization)
-- [Git repository and CI Tools](#git-repository-and-ci-tools)
-- [Content types and archetypes](#content-types-and-archetypes)
-- [Configure the site](#configure-the-site)
-- [CSS and JavaScript](#css-and-javascript)
-  - [CSS](#css)
-  - [Javascript](#javascript)
-- [Images](#images)
-- [Caching and .htaccess](#caching-and-htaccess)
-- [Add a Schema.org partial](#add-a-schemaorg-partial)
-- [Front-End Checklist](#front-end-checklist)
-- [Tools](#tools)
+- [Hugo - Best practices](#hugo---best-practices)
+  - [Table of contents](#table-of-contents)
+  - [Content organization](#content-organization)
+  - [Git repository and CI Tools](#git-repository-and-ci-tools)
+  - [Content types and archetypes](#content-types-and-archetypes)
+  - [Configure the site](#configure-the-site)
+  - [CSS and JavaScript](#css-and-javascript)
+    - [CSS](#css)
+    - [Javascript](#javascript)
+    - [Conditionals](#conditionals)
+  - [Images](#images)
+  - [Caching and .htaccess](#caching-and-htaccess)
+  - [Add a Schema.org partial](#add-a-schemaorg-partial)
+  - [Front-End Checklist](#front-end-checklist)
+  - [Tools](#tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -167,6 +167,24 @@ Usually a theme will contain multiple JS files which might require a specific or
 <script src="{{ $fullscript.Permalink }}"></script>
 ```
 
+### Conditionals
+
+All scripts and styles that are needed only on specific pages should be wrapped in conditionals.
+
+```html
+{{ if .Params.customPageColor }}
+    <style>
+        body { background-color: red; }
+    </style>
+{{ end }}
+```
+
+```html
+{{ if .Params.contactScript }}
+    <script src="/js/my-contact-script.js"></script>
+{{ end }}
+```
+
 ## Images
 
 Image files should never be larger than necessary.
@@ -196,13 +214,13 @@ This example resizes the image mentioned in the `featured_image` parameter of th
 
 See the example `.htaccess` in the `static` folder. It covers the following points.
 
-* Redirects for old content
-* Compression
-* Caching
-* SSL
-* HSTS and Content Security Policies
-* Errror documents
-* Wordpress migration rules
+- Redirects for old content
+- Compression
+- Caching
+- SSL
+- HSTS and Content Security Policies
+- Errror documents
+- Wordpress migration rules
 
 Make sure you understand every rule before applying it! The Content-Security-Policy might break your page if you rely on external sources.
 
@@ -270,9 +288,9 @@ Walk trough every point in the [Front-End Checklist](https://github.com/thedavid
 
 There are some tools and websites that can validate your page and check the speed.
 
-* [webhint](https://webhint.io/scanner/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._
-* [Varvy SEO tool](https://varvy.com/) _See how well a page follows the Google guidelines._
-* [SEORCH](https://seorch.de/) German SEO testing tool.
-* [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
-* [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) speed test.
-* [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance, speed and SEO checks in Chrome.
+- [webhint](https://webhint.io/scanner/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._
+- [Varvy SEO tool](https://varvy.com/) _See how well a page follows the Google guidelines._
+- [SEORCH](https://seorch.de/) German SEO testing tool.
+- [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
+- [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) speed test.
+- [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance, speed and SEO checks in Chrome.
