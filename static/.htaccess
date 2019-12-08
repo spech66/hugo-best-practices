@@ -9,26 +9,26 @@ RewriteEngine On
 # RewriteRule ^2018/10/old-blog-post/(.*)$ https://www.REPLACEME.xyz/2018/10/new-blog-post/ [R=301,L]
 
 # SSL and www
-RewriteCond %{HTTPS} !on [OR]
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule (.*) https://www.REPLACEME.xyz%{REQUEST_URI} [L,R=301]
+# RewriteCond %{HTTPS} !on [OR]
+# RewriteCond %{HTTP_HOST} !^www\.
+# RewriteRule (.*) https://www.REPLACEME.xyz%{REQUEST_URI} [L,R=301]
 
 # Create 404 error page in /layouts
 ErrorDocument 404 /404.html
 
 # Redirect Wordpress RSS feed URL to Hugo RSS feed URL
-RedirectMatch 301 (?i)^/feed/?(index.xml)?$ https://www.REPLACEME.xyz/index.xml
+# RedirectMatch 301 (?i)^/feed/?(index.xml)?$ https://www.REPLACEME.xyz/index.xml
 
 # HSTS
 Header set Strict-Transport-Security "max-age=31536000"
 # Block site from being framed with X-Frame-Options and CSP
-#Header set Content-Security-Policy "frame-ancestors 'self';"
+# Header set Content-Security-Policy "frame-ancestors 'self';"
 Header append X-Frame-Options: DENY
 # Prevent browsers from incorrectly detecting non-scripts as scripts
 Header append X-Content-Type-Options: nosniff
 # Content Security Policy
 # Don't implement the above policy yet; instead just report violations that would have occured
-#Header set Content-Security-Policy-Report-Only: "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * https: data:; frame-ancestors 'self';"
+# Header set Content-Security-Policy-Report-Only: "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * https: data:; frame-ancestors 'self';"
 Header set Content-Security-Policy: "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * data:; frame-ancestors 'self';"
 
 # Active GZIP compression
@@ -58,7 +58,6 @@ Header set Content-Security-Policy: "default-src https: 'unsafe-eval' 'unsafe-in
 
 # Browser Caching
 <IfModule mod_expires.c>
-
 	ExpiresActive on
 	ExpiresDefault                                    "access plus 1 month"
 	
