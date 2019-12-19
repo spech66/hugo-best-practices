@@ -290,7 +290,9 @@ There are some tools and websites that can validate your page and check the spee
 
 - [webhint](https://webhint.io/scanner/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._
 - [Varvy SEO tool](https://varvy.com/) _See how well a page follows the Google guidelines._
+- [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) Helps validating the structured data on the website.
+- [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) checks performance, loading times and image sizes.
+- [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performs audits on website performance, best practices, accessibility and SEO.
+- [SSL Server Test](https://www.ssllabs.com/ssltest/index.html) is a _free online service performing a deep analysis of the configuration of any SSL web server on the public Internet._
+- [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/) _An easy-to-use secure configuration generator for web, database, and mail software._
 - [SEORCH](https://seorch.de/) German SEO testing tool.
-- [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
-- [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) speed test.
-- [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance, speed and SEO checks in Chrome.
