@@ -3,8 +3,13 @@
 # generated 2020-01-08
 
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+    listen 80;
+    listen [::]:80;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    # match non-www version
+    server_name example.com;
 
     # redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
     return 301 https://$host$request_uri;
@@ -14,10 +19,16 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
+    # listen to www-version
+    server_name www.example.com;
+
     root /var/www/html;
     index index.html index.htm;
     charset utf-8;
     client_max_body_size 128M;
+
+    gzip on;
+    gzip_types text/plain text/xml text/css application/x-javascript;
 
     # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
     ssl_certificate /path/to/signed_cert_plus_intermediates;
@@ -51,6 +62,9 @@ server {
             # First attempt to serve request as file, then
             # as directory, then fall back to displaying a 404.
             try_files $uri $uri/ =404;
+
+            # Create 404 error page in /layouts
+            error_page 404 /404.html;
     }
 
     # deny access to .htaccess files, if Apache's document root
@@ -58,5 +72,13 @@ server {
     #
     location ~ /\.ht {
            deny all;
+    }
+
+    location ~* \.(js|css)$ {
+        expires 31d;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico)$ {
+        expires 365d;
     }
 }
