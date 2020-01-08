@@ -27,8 +27,35 @@ server {
     charset utf-8;
     client_max_body_size 128M;
 
-    gzip on;
-    gzip_types text/plain text/xml text/css application/x-javascript;
+    # https://github.com/darktable/html5-boilerplate-server-configs/blob/a164643fdafb42523bc943995bfe710e1baa5d75/nginx.conf#L63
+    # Enable Gzip
+    gzip  on;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_min_length 1100;
+    gzip_buffers     4 8k;
+    gzip_proxied any;
+    gzip_types
+        # text/html is always compressed by HttpGzipModule
+        text/css
+        text/javascript
+        text/xml
+        text/plain
+        text/x-component
+        application/javascript
+        application/json
+        application/xml
+        application/rss+xml
+        font/truetype
+        font/opentype
+        application/vnd.ms-fontobject
+        image/svg+xml;
+
+    gzip_static on;
+
+    gzip_proxied        expired no-cache no-store private auth;
+    gzip_disable        "MSIE [1-6]\.";
+    gzip_vary  on;
 
     # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
     ssl_certificate /path/to/signed_cert_plus_intermediates;
