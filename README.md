@@ -23,6 +23,7 @@ Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/b
   - [Images](#images)
   - [Caching and .htaccess](#caching-and-htaccess)
   - [Add a Schema.org partial](#add-a-schemaorg-partial)
+  - [External links in new window](#external-links-in-new-window)
   - [Front-End Checklist](#front-end-checklist)
   - [Tools](#tools)
 
@@ -279,6 +280,11 @@ Setting .Site.Author is a bit tricky. Use this snippet.
 [Author]  
   name = "Sebastian Pech"
 ```
+
+## External links in new window
+
+Starting with Hugo 0.60 and the *Goldmark* parser external **links** won't open in a **new window**. The `hrefTargetBlank` from *Blackfriday* is not supported in *Goldmark*.
+In the [hugo-shortcodes](https://github.com/spech66/hugo-shortcodes) collection the `render-link.html` shortcode will fix the problem. Put the file in `\layouts\_default\_markup` and alls urls starting with http(s) will get the `target="_blank" rel="noopener noreferrer"` properties.
 
 ## Front-End Checklist
 
