@@ -290,6 +290,10 @@ In the [hugo-shortcodes](https://github.com/spech66/hugo-shortcodes) collection 
 
 Walk trough every point in the [Front-End Checklist](https://github.com/thedaviddias/Front-End-Checklist) and the [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist).
 
+## Awesome Hugo list
+
+Additional links and resources can be found at [Awesome Hugo](https://github.com/theNewDynamic/awesome-hugo). *A curated list of awesome things related to Hugo.*
+
 ## Tools
 
 There are some tools and websites that can validate your page and check the speed.
