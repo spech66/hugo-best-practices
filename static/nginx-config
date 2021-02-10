@@ -87,6 +87,11 @@ server {
 
             # Create 404 error page in /layouts
             error_page 404 /404.html;
+            
+          add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+          add_header X-Frame-Options "DENY";
+          add_header X-Content-Type-Options nosniff;
+          # add_header Content-Security-Policy "default-src https: 'unsafe-eval' 'unsafe-inline' data:; img-src * data:; object-src 'none'; frame-src 'self' *.google.de google.de *.google.com google.com; font-src * data:; frame-ancestors 'self'; script-src 'self' 'unsafe-inline';";
     }
 
     # deny access to .htaccess files, if Apache's document root
