@@ -1,15 +1,10 @@
 # nginx configuration example for hugo
-# based on: https://ssl-config.mozilla.org/#server=nginx&server-version=1.17.0&config=intermediate 
-# generated 2020-01-08
+# based on: https://ssl-config.mozilla.org/#server=nginx&version=1.17.7&config=intermediate&openssl=1.1.1d&guideline=5.6
+# generated 2021-02-10, Mozilla Guideline v5.6, nginx 1.17.7, OpenSSL 1.1.1d, intermediate configuration
 
 server {
-    listen 80;
-    listen [::]:80;
-    listen 443 ssl;
-    listen [::]:443 ssl;
-
-    # match non-www version
-    server_name example.com;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
     # redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
     return 301 https://$host$request_uri;
@@ -64,8 +59,8 @@ server {
     ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
     ssl_session_tickets off;
 
-    # curl https://ssl-config.mozilla.org/ffdhe2048.txt > /path/to/dhparam.pem
-    ssl_dhparam /path/to/dhparam.pem;
+    # curl https://ssl-config.mozilla.org/ffdhe2048.txt > /path/to/dhparam
+    ssl_dhparam /path/to/dhparam;
 
     # intermediate configuration
     ssl_protocols TLSv1.2 TLSv1.3;
