@@ -31,7 +31,7 @@ Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/b
 
 ## Content organization
 
-Keep all images next to the index Markdown file. This allows to keep the images in the highest possible resolution and let hugo resize them to the perfect size for the current theme.
+Keep all images next to the index Markdown file. This allows to keep the images in the highest possible resolution and let hugo resize them to the perfect size for the current theme (see [Images](#images) below).
 
 ```sh
 ├── mysite/
@@ -144,15 +144,25 @@ Finally `slice` allows you to concat multiple files to a new one. This works bes
 Putting the above methods in place the minified `main.css` will be created as described below. Keep in mind that the files has to be in the `assets` folder.
 
 ```html
-{{ $stylemain := resources.Get "css/main.css" | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $stylemain.Permalink }}" integrity="{{ $stylemain.Data.Integrity }}">
+{{ $stylemain := resources.Get "css/main.css" | minify | fingerprint "sha512" }}
+<link rel="stylesheet" href="{{ $stylemain.RelPermalink }}" integrity="{{ $stylemain.Data.Integrity }}">
 ```
 
 For processing SCSS Hugo provides two functions. ([Hugo Documentation](https://gohugo.io/hugo-pipes/postcss/))
 
 ```html
-{{ $stylemain := resources.Get "scss/main.scss" | toCSS | postCSS (dict "use" "autoprefixer") | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $stylemain.Permalink }}" integrity="{{ $stylemain.Data.Integrity }}">
+{{ $stylemain := resources.Get "scss/main.scss" | toCSS | postCSS (dict "use" "autoprefixer") | minify | fingerprint "sha512" }}
+<link rel="stylesheet" href="{{ $stylemain.RelPermalink }}" integrity="{{ $stylemain.Data.Integrity }}">
+```
+
+Combining all css files to one minified file allows fewer HTTP requests. This is done using `slice`.
+
+```html
+{{ $cssbootstrap := resources.Get "/css/bootstrap.css" }}
+{{ $cssmain := resources.Get "/css/main.css" }}
+{{ $csscustom := resources.Get "/css/custom.css" }}
+{{ $allcss := slice $cssbootstrap $cssmain $csscustom | resources.Concat "/css/vendor.css" | minify | fingerprint "sha512" }}
+<link rel="stylesheet" href="{{ $allcss.RelPermalink }}" integrity="{{ $allcss.Data.Integrity }}">
 ```
 
 ### Javascript
@@ -161,11 +171,11 @@ Usually a theme will contain multiple JS files which might require a specific or
 
 ```html
 {{ $jquery := resources.Get "/js/jquery-v6.6.6/jquery.min.js" }}
-{{ $bootstrap := resources.Get "/js/bootstrap-v4.2.0/bootstrap.min.js" }}
+{{ $bootstrap := resources.Get "/js/bootstrap-v4.6.0/bootstrap.min.js" }}
 {{ $main := resources.Get "/js/main.js" }}
 
-{{ $fullscript := slice $jquery $bootstrap $main | resources.Concat "/js/vendor.js" | minify | fingerprint }}
-<script src="{{ $fullscript.Permalink }}"></script>
+{{ $fullscript := slice $jquery $bootstrap $main | resources.Concat "/js/vendor.js" | minify | fingerprint "sha512" }}
+<script src="{{ $fullscript.RelPermalink }}" integrity="{{ $fullscript.Data.Integrity }}"></script>
 ```
 
 ### Conditionals
