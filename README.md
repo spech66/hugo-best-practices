@@ -55,12 +55,12 @@ Keep your site in a version control system like Git. This provides backup, histo
 
 Use Continuous Integration/Deployment to publish your website after git push. Simple solutions like [webhook](https://github.com/adnanh/webhook/) might do the job. For complex scenarios you might want to use something like [Jenkins](https://jenkins.io/). For most cases Jenkins will be overkill.
 
-You can sync files using `rsync` after a successfull build. Have a look at the provided `deployment` scripts in this repository.
+You can sync files using `rsync` after a successful build. Have a look at the provided `deployment` scripts in this repository.
 
 ## Content types and archetypes
 
 Define your required types. A blog usually goes with pages and posts. Pages won't have fields like the author or creation dates displayed.
-Pages are usually reached under their name directly. Posts will be posted serveral times a month and might have a structure like `/year/month/name`.
+Pages are usually reached under their name directly. Posts will be posted several times a month and might have a structure like `/year/month/name`.
 The archetypes should reflect the data that is needed for the content. Posts should have tags and categories applied.
 
 ```yaml
@@ -129,7 +129,7 @@ Make sure to send your `sitemap.xml` file to [Google Search Console](https://www
 ## CSS and JavaScript
 
 Old themes kept the css and js files in the static folder. Sometimes tools like Gulp, Grunt and Webpack were used for pre-processing.
-The latest version of Hugo will do all the stuff like bundling and minifiy for you. For this to work the files have to be put in the `assets` folder.
+The latest version of Hugo will do all the stuff like bundling and minifying for you. For this to work the files have to be put in the `assets` folder.
 
 There are three critical methods to use as the bare minimum `minify`, `fingerprint` and `slice`. SCSS might make use of `toCSS` and `postCSS`.
 
