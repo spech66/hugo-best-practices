@@ -110,7 +110,6 @@ languageCode = "de-DE" # or en-US
 title = "My hugo page"
 description = "Nice page"
 # theme = "hugo-future-imperfect" # <- you won't need this as we copy the theme data!
-googleAnalytics = "UA-111111111111-1"
 canonifyURLs = true
 copyright = "Sebastian Pech"
 enableRobotsTXT = true
