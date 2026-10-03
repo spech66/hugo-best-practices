@@ -20,6 +20,7 @@ The examples are tested with Hugo 0.16x. Older Hugo versions might not support e
   - [Content types and archetypes](#content-types-and-archetypes)
   - [Configure the site](#configure-the-site)
   - [Keep up with Hugo deprecations](#keep-up-with-hugo-deprecations)
+    - [Template system since Hugo 0.146](#template-system-since-hugo-0146)
   - [CSS and JavaScript](#css-and-javascript)
     - [CSS](#css)
     - [Only ship what you use](#only-ship-what-you-use)
@@ -34,6 +35,9 @@ The examples are tested with Hugo 0.16x. Older Hugo versions might not support e
   - [External links in new window](#external-links-in-new-window)
   - [Themes: overrides and maintenance](#themes-overrides-and-maintenance)
   - [Readability and accessibility](#readability-and-accessibility)
+  - [Dark mode](#dark-mode)
+  - [Print styles](#print-styles)
+  - [Check pages with a headless browser](#check-pages-with-a-headless-browser)
   - [Front-End Checklist](#front-end-checklist)
   - [Awesome Hugo list](#awesome-hugo-list)
   - [Tools](#tools)
@@ -166,8 +170,25 @@ Changes that hit most older themes and sites:
 | `.Site.Author` | `.Site.Params.author` |
 | `.Site.Data` / `site.Data` | `hugo.Data` |
 | `toCSS` / `resources.ToCSS` | `css.Sass` |
+| `{{ template "_internal/opengraph.html" . }}` | `{{ partial "opengraph.html" . }}` |
 
 Set `min_version` in a theme's `theme.toml` to the oldest Hugo version you actually tested.
+
+### Template system since Hugo 0.146
+
+Hugo 0.146 re-implemented the template lookup and changed the `layouts` folder ([overview](https://gohugo.io/templates/new-templatesystem-overview/)). Old structures are mapped automatically, so existing themes keep working, but new themes and sites should use the new names:
+
+| Old | New |
+| --- | --- |
+| `layouts/_default/single.html`, `list.html`, `baseof.html` | `layouts/single.html`, `list.html`, `baseof.html` |
+| `layouts/index.html` (home page) | `layouts/home.html` |
+| `layouts/partials/` | `layouts/_partials/` |
+| `layouts/shortcodes/` | `layouts/_shortcodes/` |
+| `layouts/_default/_markup/` | `layouts/_markup/` |
+| `list-baseof.html` | `baseof.list.html` |
+| `taxonomy.html` for taxonomy and term pages | `taxonomy.html` and `term.html` (or one `list.html`) |
+
+The examples below use the new paths. In older themes the same files live in the old folders.
 
 ## CSS and JavaScript
 
@@ -251,7 +272,7 @@ Store the glyphs in a data file and render them with a partial:
 ```
 
 ```html
-{{- /* layouts/partials/icon.html */ -}}
+{{- /* layouts/_partials/icon.html */ -}}
 {{- with index hugo.Data.icons . -}}
 <svg class="icon" viewBox="0 -448 {{ .w }} 512" aria-hidden="true" focusable="false"><path transform="scale(1,-1)" d="{{ .d }}"/></svg>
 {{- end -}}
@@ -275,6 +296,7 @@ For menus, use menu params instead of HTML in `pre`:
 
 ## Fonts
 
+- The fastest font is no font: a system font stack (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`) needs no download and looks native everywhere. It is a good default for themes; let sites add a web font in their custom CSS.
 - Self-host the fonts and use **only `woff2`**. `eot`, `ttf`, `svg` and `woff` are not needed by any current browser.
 - Use the **latin subset** and only the weights you need. A variable font covers all weights in one file.
 - Load a **real bold** weight if the text uses bold (Markdown `**...**`). Without it the browser fakes bold, which looks smeared.
@@ -311,7 +333,7 @@ Keep the original images next to the Markdown files (as mentioned before) and le
 A partial that returns the processed image keeps this in one place. It never upscales and leaves GIF/SVG untouched:
 
 ```html
-{{- /* layouts/partials/image-webp.html */ -}}
+{{- /* layouts/_partials/image-webp.html */ -}}
 {{- $img := .image -}}
 {{- $result := $img -}}
 {{- if in (slice "jpeg" "png") $img.MediaType.SubType -}}
@@ -366,10 +388,10 @@ Make sure you understand every rule before applying it! The Content-Security-Pol
 
 ## Structured data (Schema.org)
 
-Use the Hugo [embedded templates](https://gohugo.io/templates/embedded/) for Open Graph and Twitter Cards. For Schema.org JSON-LD build the data as a `dict` and let `jsonify` do the escaping. String templates break as soon as a title contains a quote, and dates need extra care.
+Use the Hugo [embedded templates](https://gohugo.io/templates/embedded/) for Open Graph and Twitter Cards: `{{ partial "opengraph.html" . }}` and `{{ partial "twitter_cards.html" . }}`. For Schema.org JSON-LD build the data as a `dict` and let `jsonify` do the escaping. String templates break as soon as a title contains a quote, and dates need extra care.
 
 ```html
-{{- /* layouts/partials/seo_schema.html */ -}}
+{{- /* layouts/_partials/seo_schema.html */ -}}
 {{- if eq .Section "posts" -}}
 {{- $schema := dict
     "@context" "https://schema.org"
@@ -394,7 +416,7 @@ Check the result with the [Rich Results Test](https://search.google.com/test/ric
 
 ## External links in new window
 
-Goldmark has no option for `target="_blank"`, use a [link render hook](https://gohugo.io/render-hooks/links/) in `layouts/_default/_markup/render-link.html`. Write it without line breaks inside the `<a>`, otherwise the whitespace becomes part of the link text. A small, quiet icon marks external links without making the text restless.
+Goldmark has no option for `target="_blank"`, use a [link render hook](https://gohugo.io/render-hooks/links/) in `layouts/_markup/render-link.html` (older themes: `layouts/_default/_markup/`). Write it without line breaks inside the `<a>`, otherwise the whitespace becomes part of the link text. A small, quiet icon marks external links without making the text restless.
 
 ```html
 {{- $external := strings.HasPrefix .Destination "http" -}}
@@ -409,6 +431,7 @@ Goldmark has no option for `target="_blank"`, use a [link render hook](https://g
 - **Find stale overrides** from time to time by diffing the site's `layouts/` against the theme. Identical or nearly identical files can go.
 - **Never change files inside `themes/`** of a site if the theme is copied or synced from elsewhere. The next update overwrites them. Site specific things belong into the site's `layouts/` and `assets/`.
 - **Keep private things out of public themes** (contact form backends, personal texts).
+- **Release tags:** in my experience the [Hugo themes](https://themes.gohugo.io/) site keeps using the latest release tag once a theme repository has tags, newer untagged commits do not show up. Either tag every release or never tag. Tags should be [semantic versions](https://semver.org/) (`v1.2.3`).
 - **Gallery screenshots** for the [Hugo themes](https://themes.gohugo.io/) site: `images/screenshot.png` (1500x1000) and `images/tn.png` (900x600). Take them from the example site with a headless browser, e.g. `msedge --headless=new --hide-scrollbars --window-size=1500,1000 --screenshot=screenshot.png http://localhost:1313/` (`--force-device-scale-factor=0.6` for the thumbnail).
 
 ## Readability and accessibility
@@ -418,6 +441,60 @@ Goldmark has no option for `target="_blank"`, use a [link render hook](https://g
 - Keep cards in a grid the same height: fixed image ratio, summary cut with `-webkit-line-clamp`, tags pushed to the bottom with `margin-top: auto`.
 - Make the whole card clickable with one link and a stretched `::after` instead of several "Read more" links, and lift other links in the card above it with `position: relative; z-index: 2`.
 - Visible keyboard focus (`:focus-visible`) and `prefers-reduced-motion` for hover animations.
+- Text on photos: a gradient overlay and a "frosted glass" surface (`background: rgba(...)` plus `backdrop-filter: blur(14px)`) keep text readable on any image. Offer a solid fallback with `@media (prefers-reduced-transparency: reduce)`.
+- Build navigation lists from the data (menus, data files, sections) instead of a hardcoded list. Missing entries then disappear instead of producing empty links.
+
+## Dark mode
+
+- Define all colors as CSS variables and switch them with one class (or `prefers-color-scheme`), never duplicate whole rule sets.
+- Pick dark colors separately. Inverting the light palette rarely works: links and the accent color usually need a lighter shade on dark backgrounds.
+- If visitors can toggle the theme, set the class with a small inline script directly after `<body>`. A script at the end of the page applies the theme after the first paint and the page flashes in the wrong colors.
+
+```html
+<body>
+<script>(function(){var t=null;try{t=localStorage.getItem("theme");}catch(e){}if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches)){document.body.classList.add("dark-theme");}})();</script>
+```
+
+```css
+:root { --text: #3a4452; --bg: #ffffff; --accent: #245d93; }
+body.dark-theme { --text: #c9ced6; --bg: #1b1e23; --accent: #8cc0f2; }
+```
+
+Wrap `localStorage` in `try`/`catch`, it throws in some privacy modes.
+
+## Print styles
+
+Pages that are printed or saved as PDF (CVs, recipes, documentation) need a print stylesheet:
+
+```css
+@page { size: A4; margin: 16mm 14mm; }
+
+@media print {
+  nav, footer, .buttons { display: none; }
+  body { background: #fff; color: #000; }
+  h2, h3 { break-after: avoid; }           /* no heading at the end of a page */
+  li, figure, .small-block { break-inside: avoid; }
+}
+```
+
+Use `break-inside: avoid` only for small elements. On a long block it pushes the whole block to the next page and leaves half a page empty. Reset dark mode colors in print, and hide decorative icons.
+
+## Check pages with a headless browser
+
+Chrome and Edge can take screenshots and PDFs from the command line. This is handy for theme gallery images, to check dark mode and to test the print layout:
+
+```sh
+# screenshot in light or dark mode (preferredColorScheme: 0 = dark, 1 = light)
+msedge --headless=new --hide-scrollbars --window-size=1500,1000 --blink-settings=preferredColorScheme=1 --screenshot=light.png http://localhost:1313/
+
+# thumbnail at 60 % (900x600)
+msedge --headless=new --hide-scrollbars --window-size=1500,1000 --force-device-scale-factor=0.6 --screenshot=tn.png http://localhost:1313/
+
+# print layout as PDF
+msedge --headless=new --no-pdf-header-footer --print-to-pdf=page.pdf http://localhost:1313/
+```
+
+Use `chrome` instead of `msedge` with the same flags. Pass a separate `--user-data-dir` if a normal browser window is open at the same time.
 
 ## Front-End Checklist
 
@@ -431,7 +508,7 @@ Additional links and resources can be found at [Awesome Hugo](https://github.com
 
 There are some tools and websites that can validate your page and check the speed.
 
-- [webhint](https://webhint.io/scanner/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._
+- [webhint](https://webhint.io/) _is a linting tool that will help you with your site's accessibility, speed, security and more, by checking your code for best practices and common errors._ The online scanner was shut down, use the CLI or the VS Code extension.
 - [Google PageSpeed Insights](https://pagespeed.web.dev/) checks performance, loading times and image sizes.
 - [Google Lighthouse](https://developer.chrome.com/docs/lighthouse/) performs audits on website performance, best practices, accessibility and SEO. It is built into Chrome and Edge DevTools.
 - [Rich Results Test](https://search.google.com/test/rich-results) and [Schema Markup Validator](https://validator.schema.org/) validate the structured data on the website.
