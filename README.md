@@ -2,7 +2,7 @@
 
 Best practices and ideas for [Hugo](https://gohugo.io/) the open-source static site generator.
 
-Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/bootstrap-bp-hugo-theme), [Materialize-BP](https://github.com/spech66/materialize-bp-hugo-theme),
+Themes based on this best practices: [Bootstrap-BP](https://github.com/spech66/bootstrap-bp-hugo-theme), [Flex-BP-CV](https://github.com/spech66/flex-bp-hugo-cv),
 [Bootstrap-BP hugo startpage](https://github.com/spech66/bootstrap-bp-hugo-startpage).
 
 The examples are tested with Hugo 0.16x. Older Hugo versions might not support every function used here.
